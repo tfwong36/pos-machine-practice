@@ -5,6 +5,16 @@ public class PosMachine {
     public String printReceipt(List<String> barcodes) {
         return null;
     }
+
+    private String spliceItemsDetails(Receipt receipt) {
+        String itemsDetail = "***<store earning no money>Receipt***\n";
+        for (ReceiptItem receiptItem : receipt.getItemDetail()) {
+            itemsDetail += "Name: " + receiptItem.getName() + ", " + "Quantity: " + receiptItem.getQuantity() + ", " + "Unit price: "
+                    + receiptItem.getUnitPrice() + " (yuan), Subtotal: " + receiptItem.getSubTotal() + " (yuan)\n";
+        }
+        return itemsDetail;
+    }
+
     private String spliceReceipt(Receipt receipt) {
         return "----------------------\n" +
                 "Total: " + receipt.getTotalPrice() + " (yuan)" +
