@@ -6,6 +6,20 @@ public class PosMachine {
         return null;
     }
 
+    private List<ItemInfo> convertToItemInfos(List<String> barcodes){
+        List<ItemInfo> database = ItemDataLoader.loadAllItemInfos();
+        List<ItemInfo> itemsWithDetail = new ArrayList<>();
+        for (String barcode : barcodes){
+            boolean done = false;
+            for (int i = 0; i < database.size(); i++){
+                if (barcode.equals(database.get(i).getBarcode())) {
+                    itemsWithDetail.add(databse.get(i));
+                }
+            }
+        }
+        return itemsWithDetail;
+    }
+
     private Receipt calculateReceipt(List<ItemInfo> itemsWithDetail){
         List<ReceiptItem> receiptItems = calculateReceiptItems(itemsWithDetail);
         int totalPrice = calculateTotalPrice(receiptItems);
