@@ -5,7 +5,6 @@ public class PosMachine {
     public String printReceipt(List<String> barcodes) {
         return null;
     }
-
     private int calculateTotalPrice(List<ReceiptItem> receiptItems){
         int totalPrice = 0;
         for (ReceiptItem receiptItem : receiptItems){
@@ -14,7 +13,7 @@ public class PosMachine {
         return totalPrice;
     }
 
-    private List<ReceiptItem> calculateReceipt(List<ItemInfo> itemsWithDetail) {
+    private List<ReceiptItem> calculateReceiptItems(List<ItemInfo> itemsWithDetail) {
         List<ReceiptItem> receiptItems = new ArrayList<>();
         for (ItemInfo iteminfo : itemsWithDetail){
             boolean done = false;
