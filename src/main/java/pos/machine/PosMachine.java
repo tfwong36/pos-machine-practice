@@ -3,7 +3,15 @@ import java.util.*;
 
 public class PosMachine {
     public String printReceipt(List<String> barcodes) {
-        return null;
+        List<ItemInfo> itemsWithDetail = convertToItemInfos(barcodes);
+        Receipt receipt = calculateReceipt(itemsWithDetail);
+        return renderReceipt(receipt);
+    }
+
+    private String renderReceipt(Receipt receipt) {
+        String printedReceipt = spliceItemsDetails(receipt);
+        printedReceipt += spliceReceipt(receipt);
+        return printedReceipt;
     }
 
     private String spliceItemsDetails(Receipt receipt) {
@@ -51,20 +59,22 @@ public class PosMachine {
 
     private List<ReceiptItem> calculateReceiptItems(List<ItemInfo> itemsWithDetail) {
         List<ReceiptItem> receiptItems = new ArrayList<>();
-        for (ItemInfo iteminfo : itemsWithDetail){
+        for (ItemInfo iteminfo : itemsWithDetail) {
             boolean done = false;
-            for (int i = 0; i < receiptItems.size() && !done; i++){
-                if (receiptItems.get(i).getName().equals(iteminfo.getName())){
+            for (int i = 0; receiptItems.size() == 0 || (i < receiptItems.size() && !done); i++) {
+                if (receiptItems.size() == 0){
+                    receiptItems.add(new ReceiptItem(iteminfo.getName(), 1, iteminfo.getPrice(), iteminfo.getPrice()));
+                    done = true;
+                } else if (receiptItems.get(i).getName().equals(iteminfo.getName())){
                     receiptItems.get(i).setQuantity(receiptItems.get(i).getQuantity() + 1);
                     receiptItems.get(i).setSubTotal(receiptItems.get(i).getSubTotal() + receiptItems.get(i).getUnitPrice());
                     done = true;
-                }
-                if (i == receiptItems.size() - 1){
+                } else if (i == receiptItems.size() - 1) {
                     receiptItems.add(new ReceiptItem(iteminfo.getName(), 1, iteminfo.getPrice(), iteminfo.getPrice()));
+                    done = true;
                 }
             }
         }
         return receiptItems;
     }
-
 }
