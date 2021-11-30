@@ -28,7 +28,7 @@ public class PosMachine {
             boolean done = false;
             for (int i = 0; i < database.size(); i++){
                 if (barcode.equals(database.get(i).getBarcode())) {
-                    itemsWithDetail.add(databse.get(i));
+                    itemsWithDetail.add(database.get(i));
                 }
             }
         }
