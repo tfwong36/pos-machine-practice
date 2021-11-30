@@ -5,6 +5,13 @@ public class PosMachine {
     public String printReceipt(List<String> barcodes) {
         return null;
     }
+
+    private Receipt calculateReceipt(List<ItemInfo> itemsWithDetail){
+        List<ReceiptItem> receiptItems = calculateReceiptItems(itemsWithDetail);
+        int totalPrice = calculateTotalPrice(receiptItems);
+        return new Receipt(receiptItems, totalPrice);
+    }
+
     private int calculateTotalPrice(List<ReceiptItem> receiptItems){
         int totalPrice = 0;
         for (ReceiptItem receiptItem : receiptItems){
