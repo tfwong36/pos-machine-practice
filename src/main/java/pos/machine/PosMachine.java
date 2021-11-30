@@ -5,6 +5,11 @@ public class PosMachine {
     public String printReceipt(List<String> barcodes) {
         return null;
     }
+    private String spliceReceipt(Receipt receipt) {
+        return "----------------------\n" +
+                "Total: " + receipt.getTotalPrice() + " (yuan)" +
+                "\n**********************";
+    }
 
     private List<ItemInfo> convertToItemInfos(List<String> barcodes){
         List<ItemInfo> database = ItemDataLoader.loadAllItemInfos();
