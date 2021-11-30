@@ -6,6 +6,14 @@ public class PosMachine {
         return null;
     }
 
+    private int calculateTotalPrice(List<ReceiptItem> receiptItems){
+        int totalPrice = 0;
+        for (ReceiptItem receiptItem : receiptItems){
+            totalPrice = totalPrice + receiptItem.getSubTotal();
+        }
+        return totalPrice;
+    }
+
     private List<ReceiptItem> calculateReceipt(List<ItemInfo> itemsWithDetail) {
         List<ReceiptItem> receiptItems = new ArrayList<>();
         for (ItemInfo iteminfo : itemsWithDetail){
