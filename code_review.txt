@@ -1,0 +1,2 @@
+1. remove unused variable + method
+2. logic can be simplify, find distinct, count, append receiptinfo

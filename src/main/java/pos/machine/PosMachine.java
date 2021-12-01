@@ -1,5 +1,6 @@
 package pos.machine;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PosMachine {
     public String printReceipt(List<String> barcodes) {
@@ -33,7 +34,6 @@ public class PosMachine {
         List<ItemInfo> database = ItemDataLoader.loadAllItemInfos();
         List<ItemInfo> itemsWithDetail = new ArrayList<>();
         for (String barcode : barcodes){
-            boolean done = false;
             for (int i = 0; i < database.size(); i++){
                 if (barcode.equals(database.get(i).getBarcode())) {
                     itemsWithDetail.add(database.get(i));
@@ -59,21 +59,10 @@ public class PosMachine {
 
     private List<ReceiptItem> calculateReceiptItems(List<ItemInfo> itemsWithDetail) {
         List<ReceiptItem> receiptItems = new ArrayList<>();
-        for (ItemInfo iteminfo : itemsWithDetail) {
-            boolean done = false;
-            for (int i = 0; receiptItems.size() == 0 || (i < receiptItems.size() && !done); i++) {
-                if (receiptItems.size() == 0){
-                    receiptItems.add(new ReceiptItem(iteminfo.getName(), 1, iteminfo.getPrice(), iteminfo.getPrice()));
-                    done = true;
-                } else if (receiptItems.get(i).getName().equals(iteminfo.getName())){
-                    receiptItems.get(i).setQuantity(receiptItems.get(i).getQuantity() + 1);
-                    receiptItems.get(i).setSubTotal(receiptItems.get(i).getSubTotal() + receiptItems.get(i).getUnitPrice());
-                    done = true;
-                } else if (i == receiptItems.size() - 1) {
-                    receiptItems.add(new ReceiptItem(iteminfo.getName(), 1, iteminfo.getPrice(), iteminfo.getPrice()));
-                    done = true;
-                }
-            }
+        List<ItemInfo> itemsWithDetail_distinct = itemsWithDetail.stream().distinct().collect(Collectors.toList());
+        for (ItemInfo iteminfo : itemsWithDetail_distinct) {
+            int quantity = Collections.frequency(itemsWithDetail, iteminfo);
+            receiptItems.add(new ReceiptItem(iteminfo.getName(), quantity, iteminfo.getPrice(), iteminfo.getPrice() * quantity));
         }
         return receiptItems;
     }

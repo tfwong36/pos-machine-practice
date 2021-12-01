@@ -14,15 +14,8 @@ public class Receipt {
         return itemDetail;
     }
 
-    public void setItemDetail(List<ReceiptItem> itemDetail) {
-        this.itemDetail = itemDetail;
-    }
-
     public int getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(int totalPrice) {
-        this.totalPrice = totalPrice;
-    }
 }
